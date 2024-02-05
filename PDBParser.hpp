@@ -267,16 +267,32 @@ string write_pdb_structure(ChainUnit &chain,int &i)
     {
         for (a=0;a<chain.residues[r].atoms.size();a++)
         {
-            buf<<setiosflags(ios::left)<<setw(6)
-               <<(chain.residues[r].het?"HETATM":"ATOM")
-               <<resetiosflags(ios::left)<<setw(5)<<i++<<' '
-               <<chain.residues[r].atoms[a].name<<' '
-               <<chain.residues[r].resn<<' '<<chain.chainID<<setw(4)
-               <<chain.residues[r].resi<<chain.residues[r].icode
-               <<"   " <<setiosflags(ios::fixed)<<setprecision(3)
-               <<setw(8)<<chain.residues[r].atoms[a].xyz[0]
-               <<setw(8)<<chain.residues[r].atoms[a].xyz[1]
-               <<setw(8)<<chain.residues[r].atoms[a].xyz[2];
+            if (i<100000)
+            {
+                buf<<setiosflags(ios::left)<<setw(6)
+                   <<(chain.residues[r].het?"HETATM":"ATOM")
+                   <<resetiosflags(ios::left)<<setw(5)<<i++<<' '
+                   <<chain.residues[r].atoms[a].name<<' '
+                   <<chain.residues[r].resn<<' '<<chain.chainID<<setw(4)
+                   <<chain.residues[r].resi<<chain.residues[r].icode
+                   <<"   " <<setiosflags(ios::fixed)<<setprecision(3)
+                   <<setw(8)<<chain.residues[r].atoms[a].xyz[0]
+                   <<setw(8)<<chain.residues[r].atoms[a].xyz[1]
+                   <<setw(8)<<chain.residues[r].atoms[a].xyz[2];
+            }
+            else
+            {
+                buf<<setiosflags(ios::left)<<setw(5)
+                   <<("ATOM")
+                   <<resetiosflags(ios::left)<<setw(6)<<i++<<' '
+                   <<chain.residues[r].atoms[a].name<<' '
+                   <<chain.residues[r].resn<<' '<<chain.chainID<<setw(4)
+                   <<chain.residues[r].resi<<chain.residues[r].icode
+                   <<"   " <<setiosflags(ios::fixed)<<setprecision(3)
+                   <<setw(8)<<chain.residues[r].atoms[a].xyz[0]
+                   <<setw(8)<<chain.residues[r].atoms[a].xyz[1]
+                   <<setw(8)<<chain.residues[r].atoms[a].xyz[2];
+            }
             if (chain.residues[r].atoms[a].movable)
                  buf<<"  1.00  1.00           ";
             else buf<<"  1.00  0.00           ";
